@@ -90,11 +90,59 @@ async function loginUser(req,res)=>{
         password:hashedPassword
 
     })
+    const token=jwt.sign({
+        id: foodPartner._id,
+    },process.env.JWT_SECRET)
+    res.cookie("token",token)
 
+    res.status(201).json({
+        message:"Food partner registered  succesfully",
+        foodPartner:{
+            _id:foodPartner._id,
+            email:foodPartner.email,
+            name:foodPartner.name
+        }
+    })
 
+ }
+ async function loginFoodPartner(req,res){
+    const{name,email,password}=req.body;
+    const FoodPartner=await foodPartnerModel.findOne({
+        email
+    })
+    if(!foodPartner){
+        return res.status(400).json({
+            message:"Invalid email or password"
+        })
+    }
+    const isPasswordValid=await bcrypt.compare(password,foodPartner.password);
+    
+    const token=jwt.sign({
+        id: foodPartner._id,
+    },process.env.JWT_SECRET)
+    res.cookie("token",token)
+
+    res.status(201).json({
+        message:"Food partner registered  succesfully",
+        foodPartner:{
+            _id:foodPartner._id,
+            email:foodPartner.email,
+            name:foodPartner.name
+        }
+    })
+ }
+
+ function logoutFoodPartner(req,res){
+    res.clearCookie("token");
+    res.status(200).json({
+        message:"food partner logged out succesfully"
+    })
  }
 module.exports={
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    registerFoodPartner,
+    loginFoodPartner,
+    logoutFoodPartner
 }
