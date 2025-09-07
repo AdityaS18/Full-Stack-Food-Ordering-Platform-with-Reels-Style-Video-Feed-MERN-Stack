@@ -1,5 +1,5 @@
-const userModel=require("../models/usermodel")
-const foodPartnerModel=require("../models/foodPartner.model")
+const userModel=require("../models/user.model")
+const foodPartnerModel=require("../models/foodpartner.model")
 const bcrypt = require('bcryptjs');
 const jwt =require('jsonwebtoken')
 
@@ -8,7 +8,7 @@ async function registerUser(req,res){
     const isUserAlreadyExists=await userModel.findOne({
         email
     })
-    if(userAlreadyExists){
+    if(UserAlreadyExists){
         return res.status(400).json({
             message:"User already exists"
         })
@@ -33,7 +33,7 @@ async function registerUser(req,res){
     })
 }
 
-async function loginUser(req,res)=>{
+async function loginUser(req,res){
     const {email,password} = req.body;
 
     const user=await userModel.findOne({
@@ -107,7 +107,7 @@ async function loginUser(req,res)=>{
  }
  async function loginFoodPartner(req,res){
     const{name,email,password}=req.body;
-    const FoodPartner=await foodPartnerModel.findOne({
+    const foodPartner=await foodPartnerModel.findOne({
         email
     })
     if(!foodPartner){
@@ -122,7 +122,7 @@ async function loginUser(req,res)=>{
     },process.env.JWT_SECRET)
     res.cookie("token",token)
 
-    res.status(201).json({
+    res.status(200).json({
         message:"Food partner registered  succesfully",
         foodPartner:{
             _id:foodPartner._id,
