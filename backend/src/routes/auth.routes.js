@@ -1,19 +1,16 @@
-const express=require('express')
-const authController=require("../controllers/auth.controller");
+const express = require('express');
+const authController = require("../controllers/auth.controller");
 
-const router=express.Router();
+const router = express.Router();
 
-//user Auth Apis
-router.post('/user/register',authController.registerUser)
-router.post('/user/login',authController.loginUser)
-router.get('/user/logout',authController.logoutUser)
+// User Auth APIs
+router.post('/user/register', authController.registerUser);
+router.post('/user/login', authController.loginUser);
+router.get('/user/logout', authController.logoutUser);
 
+// Food Partner Auth APIs
+router.post('/food-partner/register', authController.registerFoodPartner);
+router.post('/food-partner/login', authController.loginFoodPartner);
+router.get('/food-partner/logout', authController.logoutFoodPartner);
 
-
-//food partner Auth Apis
-router.post('/food-partner/register',authController.registerFoodPartner)
-router.post('/food-partner/login',authController.loginFoodPartner)
-router.get('/food-partner/login',authController.logoutFoodPartner)
-
-module.exports=router;
-
+module.exports = router;
