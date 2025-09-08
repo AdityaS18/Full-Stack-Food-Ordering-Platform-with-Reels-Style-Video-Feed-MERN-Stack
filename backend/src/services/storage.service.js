@@ -7,18 +7,14 @@ const imagekit = new ImageKit({
 });
 
 async function uploadFile(file, fileName) {
-    try {
-        const result = await imagekit.upload({
-            file: file,
-            fileName: fileName
-        });
-        return result;
-    } catch (err) {
-        console.error("Error creating food item:", err);
-        throw err;
-    }
+    const result = await imagekit.upload({
+        file: file, // required
+        fileName: fileName, // required
+    })
+
+    return result; // Return the URL of the uploaded file
 }
 
 module.exports = {
     uploadFile
-};
+}
